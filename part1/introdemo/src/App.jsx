@@ -18,12 +18,13 @@ const App = () => {
   const just_friends = [ 'Peter', 'Maya' ]
 
   return (
-    <>
+    <div>
       <p>Greetings</p>
       <p>{friends[0].name} {friends[0].age}</p>
       <p>{friends[1].name} {friends[1].age}</p>
       <p>{just_friends}</p>
-    </>
+      <Hello />
+    </div>
   )
 }
 
