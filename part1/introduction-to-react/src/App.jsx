@@ -8,7 +8,7 @@ const Header = (props) => {
 const Part = (props) => {
   return (
     <p>
-      {props.part.name} {props.part.exerciseCount}
+      {props.part.name} {props.part.exercises}
     </p>
     
   )
@@ -25,7 +25,8 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
-  const totalCount = props.parts[0].exerciseCount + props.parts[1].exerciseCount + props.parts[2].exerciseCount
+  // console.log(props.parts)
+  const totalCount = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
   return (
     <p>Number of exercises {totalCount} </p>
   )
