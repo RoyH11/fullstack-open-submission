@@ -29,17 +29,23 @@ const App = () => {
     console.log('Bad button clicked', bad + 1);
   }
 
+  const calculateAll = () => {
+    return good + neutral + bad;
+  }
+
+  const all = calculateAll();
+
   const calculateAverage = () => {
-    const total = good + neutral + bad;
-    return total === 0 ? 0 : (good - bad) / total;
+    return all === 0 ? 0 : (good - bad) / all;
   }
 
   const average = calculateAverage();
 
   const calculatePositivePercentage = () => {
-    const total = good + neutral + bad;
-    return total === 0 ? 0 : (good / total) * 100;
+    return all === 0 ? 0 : (good / all) * 100;
   }
+
+  const positivePercentage = calculatePositivePercentage();
 
   return (
     <div>
@@ -52,7 +58,7 @@ const App = () => {
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
       <p>average {average.toFixed(2)}</p>
-      <p>positive {calculatePositivePercentage().toFixed(2)}%</p>
+      <p>positive {positivePercentage.toFixed(2)}%</p>
     </div>
   )
 }
