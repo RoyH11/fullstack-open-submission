@@ -8,24 +8,18 @@ const Button = ({ handleClick, text }) => {
   )
 }
 
+const StatisticLine = ({ text, value }) => {
+  return (
+    <p>
+      {text} {value}
+    </p>
+  );
+}
+
 const Statistics = ({ good, neutral, bad }) => {
-  const calculateAll = () => {
-    return good + neutral + bad;
-  }
-
-  const all = calculateAll();
-
-  const calculateAverage = () => {
-    return all === 0 ? 0 : (good - bad) / all;
-  }
-
-  const average = calculateAverage();
-
-  const calculatePositivePercentage = () => {
-    return all === 0 ? 0 : (good / all) * 100;
-  }
-
-  const positivePercentage = calculatePositivePercentage();
+  const all = good + neutral + bad;
+  const average = all === 0 ? 0 : (good - bad) / all; 
+  const positivePercentage = all === 0 ? 0 : (good / all) * 100;
 
   if (all === 0) {
     return <p>No feedback given</p>;
@@ -34,11 +28,12 @@ const Statistics = ({ good, neutral, bad }) => {
   return (
     <div>
       <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>average {average.toFixed(2)}</p>
-      <p>positive {positivePercentage.toFixed(2)}%</p>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <StatisticLine text="all" value={all} />
+      <StatisticLine text="average" value={average.toFixed(2)} />
+      <StatisticLine text="positive" value={`${positivePercentage.toFixed(2)} %`} />
     </div>
   );
 }
