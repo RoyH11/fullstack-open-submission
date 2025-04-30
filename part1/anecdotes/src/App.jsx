@@ -8,6 +8,32 @@ const Button = ({ onClick, text }) => {
   )
 }
 
+const DailyAnecdote = ({ anecdote, vote }) => {
+  return (
+    <div>
+      <h2>Anecdote of the day</h2>
+      {anecdote}
+      <br />
+      has {vote} votes
+    </div>
+  )
+}
+
+
+const PopularAnecdote = ({ anecdotes, votes }) => {
+  const maxVotes = Math.max(...votes);
+  const maxIndex = votes.indexOf(maxVotes);
+
+  return (
+    <div>
+      <h2>Anecdote with most votes</h2>
+      {anecdotes[maxIndex]}
+      <br />
+      has {maxVotes} votes
+    </div>
+  );
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -21,17 +47,28 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
   const handleNextAnecdote = () => {
-    const randomIndex = Math.floor(Math.random() * anecdotes.length);
+    const randomIndex = Math.floor(Math.random() * anecdotes.length)
     setSelected(randomIndex);
+    console.log(`Selected anecdote index: ${randomIndex}`)
+  }
+
+  const handleVote = () => {
+    const newVotes = [...votes]
+    newVotes[selected] += 1
+    setVotes(newVotes)
+    console.log(`Updated votes for anecdote index ${selected}: ${newVotes[selected]}`)
   }
 
   return (
     <div>
-      {anecdotes[selected]}
+      <DailyAnecdote anecdote={anecdotes[selected]} vote={votes[selected]} />
       <br />
+      <Button onClick={handleVote} text="vote" />
       <Button onClick={handleNextAnecdote} text="next anecdote" />
+      <PopularAnecdote anecdotes={anecdotes} votes={votes} />
     </div>
   )
 }
