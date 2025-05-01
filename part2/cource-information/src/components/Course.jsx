@@ -23,20 +23,20 @@ const Content = (props) => {
     )
 }
 
-// const Total = (props) => {
-//     // console.log(props.parts)
-//     const totalCount = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
-//     return (
-//         <p>Number of exercises {totalCount} </p>
-//     )
-// }
+const Total = (props) => {
+    // console.log(props.parts)
+    const totalCount = props.parts.reduce((sum, part) => sum + part.exercises, 0);
+    return (
+        <p><strong>Total of {totalCount} exercises</strong></p>
+    )
+}
 
 const Course = (props) => {
     return (
         <div>
             <Header course={props.course.name} />
             <Content parts={props.course.parts} />
-            {/* <Total parts={props.course.parts} /> */}
+            <Total parts={props.course.parts} />
         </div>
     )
 }
