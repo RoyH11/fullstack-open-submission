@@ -8,15 +8,21 @@ const App = () => {
 
   const addPerson = (event) => {
     event.preventDefault()
-    const personExists = persons.some(person => person.name === newName)
 
+    const trimmedName = newName.trim()
+    if (trimmedName === '') {
+      alert('Name cannot be empty')
+      return
+    }
+
+    const personExists = persons.some(person => person.name === trimmedName)
     if (personExists) {
-      alert(`${newName} is already added to phonebook`)
+      alert(`${trimmedName} is already added to phonebook`)
       return
     }
 
     const personObject = {
-      name: newName,
+      name: trimmedName,
     }
 
     setPersons(persons.concat(personObject))
