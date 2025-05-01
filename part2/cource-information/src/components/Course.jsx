@@ -1,11 +1,14 @@
 const Header = (props) => {
     console.log(props)
+
     return (
-        <h1>{props.course}</h1>
+        <h2>{props.course}</h2>
     )
 }
 
 const Part = (props) => {
+    // console.log(props);
+    
     return (
         <p>
         {props.part.name} {props.part.exercises}
@@ -14,6 +17,8 @@ const Part = (props) => {
 }
 
 const Content = (props) => {
+    // console.log(props);
+    
     return (
         <>
             {props.parts.map(part =>
