@@ -1,58 +1,68 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Note from './components/Note'
+import noteService from './services/note'
 
 const App = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
 
+
+  // Fetch initial notes from the server
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/notes')
+    noteService
+      .getAll()
       .then(response => {
-        console.log('promise fulfilled')
         setNotes(response.data)
       })
   }, [])
   console.log('render', notes.length, 'notes')
 
+
+  // Function to toggle the importance of a note
+  const toggleImportanceOf = (id) => {
+    const note = notes.find(n => n.id === id)
+    const changedNote = { ...note, important: !note.important }
+
+    noteService
+      .update(id, changedNote)
+      .then(response => {
+        setNotes(notes.map(note => note.id === id ? response.data : note))
+      })
+  }
+
+
+  // Filter notes based on importance
+  const notesToShow = showAll
+    ? notes
+    : notes.filter(note => note.important)
+
+    
+  // Function to add a new note
   const addNote = (event) => {
     event.preventDefault()
     const noteObject = {
       content: newNote, 
-      important: Math.random() < 0.5, 
-      id: String(notes.length + 1),
+      important: Math.random() > 0.5, 
+      id: String(notes.length + 1) // Temporary ID generation
     }
 
-    axios
-      .post('http://localhost:3001/notes', noteObject)
-      .then(response => { 
-        console.log(response)
+    noteService
+      .create(noteObject)
+      .then(response => {
         setNotes(notes.concat(response.data))
         setNewNote('')
       })
   }
+  
 
+  // Function to handle changes in the input field
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewNote(event.target.value)
   }
 
-  const toggleImportanceOf = (id) => {
-    const url = `http://localhost:3001/notes/${id}`
-    const note = notes.find(n => n.id === id)
-    const changedNote = { ...note, important: !note.important }
-
-    axios.put(url, changedNote).then(response => {
-      setNotes(notes.map(n => n.id === id ? response.data : n))
-    })
-  }
-    
-  const notesToShow = showAll
-    ? notes
-    : notes.filter(note => note.important)
 
   return (
     <div>
