@@ -8,7 +8,7 @@
     {
       "id": "2",
       "content": "Browser can execute only JavaScript",
-      "important": true
+      "important": false
     },
     {
       "id": "3",
@@ -23,7 +23,7 @@
     {
       "id": "5",
       "content": "test note take 2",
-      "important": false
+      "important": true
     },
     {
       "id": "6",
@@ -38,7 +38,7 @@
     {
       "id": "8",
       "content": "without service add take 3 ",
-      "important": false
+      "important": true
     },
     {
       "id": "9",
