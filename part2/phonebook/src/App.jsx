@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
@@ -40,13 +39,6 @@ const App = () => {
       return
     }
 
-    // // Check if the name already exists in the phonebook
-    // const personExists = persons.some(person => person.name === trimmedName)
-    // if (personExists) {
-    //   alert(`${trimmedName} is already added to phonebook`)
-    //   return
-    // }
-
     // // Check if the number is empty or contains only spaces
     // const trimmedNumber = newNumber.trim()
     // if (trimmedNumber === '') {
@@ -63,7 +55,16 @@ const App = () => {
     const personObject = {
       name: trimmedName,
       number: newNumber,
-      id: persons.length + 1 // Simple ID generation
+      id: String(persons.length + 1) // Simple ID generation
+    }
+
+    // Check if the name already exists in the phonebook
+    const personExists = persons.some(person => person.name === trimmedName)
+    if (personExists) {
+      window.confirm(
+        `${trimmedName} is already added to phonebook, 
+        replace the old number with a new one?`
+      )
     }
 
     phonebookService
@@ -76,6 +77,7 @@ const App = () => {
       })
   }
 
+  // Handle input changes
   const handleNameChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -100,7 +102,7 @@ const App = () => {
         .then(() => {
           setPersons(persons.filter(person => person.id !== id))
         })
-        .catch(error => {
+        .catch(() => {
           alert(
             `The person '${personToDelete.name}' was already deleted from the server`
           )

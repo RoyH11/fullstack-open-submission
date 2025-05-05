@@ -6,7 +6,7 @@ const getAll = () => {
     const nonExistingPerson = {
         name: 'Non-existing Person',
         number: '000-000-0000',
-        id: '999999'
+        id: 999999
     }
     return request.then(response => response.data.concat(nonExistingPerson));
 }
