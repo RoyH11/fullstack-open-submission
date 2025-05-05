@@ -1,5 +1,5 @@
 const PersonForm = ({ addPerson, newName, handleNameChange, newNumber, handleNumberChange}) => {
-    console.log('Rendering PersonForm')
+    // console.log('Rendering PersonForm')
     return (
         <form onSubmit={addPerson}>
             <div>

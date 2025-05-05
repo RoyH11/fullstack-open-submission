@@ -1,5 +1,5 @@
 const Filter = ({ filter, handleFilterChange }) => {
-    console.log('Filter component rendered with filter:', filter)
+    // console.log('Filter component rendered with filter:', filter)
     return (
         <form onSubmit={(event) => event.preventDefault()}>
             <div>

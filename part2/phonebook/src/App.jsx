@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import phonebookService from './services/phonebookService'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -10,22 +11,25 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
 
+  // Fetch initial data
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    phonebookService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
+  console.log('render', persons.length, 'persons')
 
+  // Filter persons 
   const filteredPersons = filter
     ? persons.filter(person => 
         person.name.toLowerCase().includes(filter.toLowerCase())
       )
     : persons
-
+  
+  // Add a new person 
   const addPerson = (event) => {
     event.preventDefault()
 
@@ -36,37 +40,40 @@ const App = () => {
       return
     }
 
-    // Check if the name already exists in the phonebook
-    const personExists = persons.some(person => person.name === trimmedName)
-    if (personExists) {
-      alert(`${trimmedName} is already added to phonebook`)
-      return
-    }
+    // // Check if the name already exists in the phonebook
+    // const personExists = persons.some(person => person.name === trimmedName)
+    // if (personExists) {
+    //   alert(`${trimmedName} is already added to phonebook`)
+    //   return
+    // }
 
-    // Check if the number is empty or contains only spaces
-    const trimmedNumber = newNumber.trim()
-    if (trimmedNumber === '') {
-      alert('Number cannot be empty')
-      return
-    }
+    // // Check if the number is empty or contains only spaces
+    // const trimmedNumber = newNumber.trim()
+    // if (trimmedNumber === '') {
+    //   alert('Number cannot be empty')
+    //   return
+    // }
 
-    // Check if the number contains only digits and dashes
-    if (!/^[0-9-]+$/.test(trimmedNumber)) {
-      alert('Number can only contain digits and dashes')
-      return
-    }
+    // // Check if the number contains only digits and dashes
+    // if (!/^[0-9-]+$/.test(trimmedNumber)) {
+    //   alert('Number can only contain digits and dashes')
+    //   return
+    // }
 
     const personObject = {
       name: trimmedName,
-      number: trimmedNumber,
+      number: newNumber,
       id: persons.length + 1 // Simple ID generation
     }
 
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
-
-    console.log(`Added ${trimmedName} with number ${trimmedNumber} to phonebook`)
+    phonebookService
+      .create(personObject)
+      .then(returnedPerson => {
+        console.log('Person added:', returnedPerson) // Log the returned person
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
   }
 
   const handleNameChange = (event) => {
@@ -84,6 +91,24 @@ const App = () => {
     setFilter(event.target.value)
   }
 
+  // Delete button
+  const handleDeletePerson = (id) => {
+    const personToDelete = persons.find(person => person.id === id)
+    if (window.confirm(`Delete ${personToDelete.name}?`)) {
+      phonebookService
+        .remove(id)
+        .then(() => {
+          setPersons(persons.filter(person => person.id !== id))
+        })
+        .catch(error => {
+          alert(
+            `The person '${personToDelete.name}' was already deleted from the server`
+          )
+          setPersons(persons.filter(person => person.id !== id))
+        })
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -97,7 +122,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <Persons filteredPersons={filteredPersons} />
+      <Persons filteredPersons={filteredPersons} handleDeletePerson={handleDeletePerson} />
     </div>
   )
 }
