@@ -52,22 +52,44 @@ const App = () => {
     //   return
     // }
 
+    
+
+    // Check if the number is empty or contains only spaces
+    const trimmedNumber = newNumber.trim()
+    if (trimmedNumber === '') {
+      alert('Number cannot be empty')
+      return
+    }
+
     const personObject = {
       name: trimmedName,
-      number: newNumber,
+      number: trimmedNumber,
       id: String(persons.length + 1) // Simple ID generation
     }
 
     // Check if the name already exists in the phonebook
     const personExists = persons.some(person => person.name === trimmedName)
-    if (personExists) {
-      window.confirm(
-        `${trimmedName} is already added to phonebook, 
-        replace the old number with a new one?`
-      )
-    }
 
-    phonebookService
+    // If the person already exists
+    if (personExists) {
+      if (window.confirm(`${trimmedName} is already added to phonebook, replace the old number with a new one?`)) {
+        const existingPerson = persons.find(person => person.name === trimmedName)
+        const updatedPerson = { ...existingPerson, number: trimmedNumber }
+        phonebookService
+          .update(existingPerson.id, updatedPerson)
+          .then(returnedPerson => {
+            console.log('Person updated:', returnedPerson) // Log the returned person
+            setPersons(persons.map(person => 
+              person.id === existingPerson.id ? returnedPerson : person
+            ))
+          })
+          
+      } else {
+        return
+      }
+
+    } else { // If the person does not exist, create a new entry
+      phonebookService
       .create(personObject)
       .then(returnedPerson => {
         console.log('Person added:', returnedPerson) // Log the returned person
@@ -75,6 +97,8 @@ const App = () => {
         setNewName('')
         setNewNumber('')
       })
+    }
+
   }
 
   // Handle input changes
