@@ -68,25 +68,26 @@ const App = () => {
     }
 
     // Check if the name already exists in the phonebook
-    const personExists = persons.some(person => person.name === trimmedName)
+    const existingPerson = persons.find(person => person.name === trimmedName)
 
     // If the person already exists
-    if (personExists) {
-      if (window.confirm(`${trimmedName} is already added to phonebook, replace the old number with a new one?`)) {
-        const existingPerson = persons.find(person => person.name === trimmedName)
-        const updatedPerson = { ...existingPerson, number: trimmedNumber }
-        phonebookService
-          .update(existingPerson.id, updatedPerson)
-          .then(returnedPerson => {
-            console.log('Person updated:', returnedPerson) // Log the returned person
-            setPersons(persons.map(person => 
-              person.id === existingPerson.id ? returnedPerson : person
-            ))
-          })
-          
-      } else {
-        return
-      }
+    if (existingPerson) {
+      const confirmUpdate = window.confirm(
+        `${trimmedName} is already added to phonebook, replace the old number with a new one?`
+      )
+
+      if (!confirmUpdate) return; 
+
+      const updatedPerson = { ...existingPerson, number: trimmedNumber }
+      
+      phonebookService
+        .update(existingPerson.id, updatedPerson)
+        .then(returnedPerson => {
+          console.log('Person updated:', returnedPerson) // Log the returned person
+          setPersons(persons.map(person => 
+            person.id === existingPerson.id ? returnedPerson : person
+          ))
+        })
 
     } else { // If the person does not exist, create a new entry
       phonebookService
