@@ -55,7 +55,9 @@ const App = () => {
     }
 
     // Check if the name already exists in the phonebook
-    const existingPerson = persons.find(person => person.name === trimmedName)
+    const existingPerson = persons.find(
+      person => person.name.toLowerCase() === trimmedName.toLowerCase()
+    )
 
     // If the person already exists
     if (existingPerson) {
