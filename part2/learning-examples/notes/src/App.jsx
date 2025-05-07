@@ -49,7 +49,10 @@ const App = () => {
     ? notes
     : notes.filter(note => note.important)
 
-    
+  // if (!notes) {
+  //   return null // or a loading indicator
+  // }
+
   // Function to add a new note
   const addNote = (event) => {
     event.preventDefault()
