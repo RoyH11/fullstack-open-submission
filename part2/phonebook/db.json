@@ -23,32 +23,17 @@
     {
       "id": "5",
       "name": "b Hellas",
-      "number": "5678"
+      "number": "123"
     },
     {
       "id": "6",
-      "name": "d hellas",
-      "number": "98798798"
-    },
-    {
-      "id": "7",
-      "name": "e hellas",
-      "number": "t7y8769876"
+      "name": "t hellas",
+      "number": "1234"
     },
     {
       "id": "8",
-      "name": "f hellas",
-      "number": "98798798798"
-    },
-    {
-      "id": "9",
-      "name": "test notification",
-      "number": "987987"
-    },
-    {
-      "id": "10",
-      "name": "test notification 2",
-      "number": "342243"
+      "name": "b hellas",
+      "number": "11"
     }
   ]
 }
