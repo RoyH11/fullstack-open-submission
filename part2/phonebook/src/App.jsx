@@ -74,6 +74,8 @@ const App = () => {
           setPersons(persons.map(person => 
             person.id === existingPerson.id ? returnedPerson : person
           ))
+          setNewName('')
+          setNewNumber('')
         })
 
     } else { // If the person does not exist, create a new entry
