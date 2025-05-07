@@ -71,9 +71,15 @@ const App = () => {
         .update(existingPerson.id, updatedPerson)
         .then(returnedPerson => {
           console.log('Person updated:', returnedPerson) // Log the returned person
+
           setPersons(persons.map(person => 
             person.id === existingPerson.id ? returnedPerson : person
           ))
+          setMessage(`Updated ${returnedPerson.name}'s number`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+
           setNewName('')
           setNewNumber('')
         })
@@ -83,7 +89,13 @@ const App = () => {
       .create(personObject)
       .then(returnedPerson => {
         console.log('Person added:', returnedPerson) // Log the returned person
+
         setPersons(persons.concat(returnedPerson))
+        setMessage(`Added ${returnedPerson.name}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
+
         setNewName('')
         setNewNumber('')
       })
@@ -128,7 +140,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={message} />
+      <Notification message={message} type={'good'} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
       <PersonForm
