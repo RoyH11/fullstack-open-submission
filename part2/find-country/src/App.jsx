@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import FindCountry from './components/FindCountry'
-import CountryList from './components/CountryList'
+import CountriesList from './components/CountriesList'
+import CountryDetails from './components/CountryDetails'
 
 const App = () => {
   const [newCountry, setNewCountry] = useState('')
   const [allCountryNames, setAllCountryNames] = useState([])
   const [countries, setCountries] = useState([])
+  const [singleCountryDetails, setSingleCountryDetails] = useState(null)
 
   // fetch all countries on initial render, only the country names
   useEffect(() => {
@@ -40,7 +42,24 @@ const App = () => {
     )
     console.log('Filtered countries:', filteredCountries)
 
-    setCountries(filteredCountries)
+    if (filteredCountries.length === 1) {
+      const countryName = filteredCountries[0]
+      console.log('Single country found:', countryName)
+      // Fetch single country details
+      axios
+        .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${countryName}`)
+        .then(response => {
+          setSingleCountryDetails(response.data)
+          console.log('Single country details fetched:', response.data)
+        })
+        .catch(error => {
+          console.error('Error fetching single country details:', error)
+        })
+      setCountries([countryName])
+    } else {
+      setSingleCountryDetails(null)
+      setCountries(filteredCountries)
+    }
     
   },[allCountryNames, newCountry])
 
@@ -51,7 +70,8 @@ const App = () => {
   return (
     <div>
       <FindCountry newCountry={newCountry} handleNewCountryChange={handleNewCountryChange} />
-      <CountryList countryNames={countries} />
+      <CountriesList countryNames={countries} />
+      <CountryDetails countryDetails={singleCountryDetails} />
     </div>
   )
 }

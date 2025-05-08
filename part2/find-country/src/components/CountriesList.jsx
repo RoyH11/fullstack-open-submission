@@ -1,4 +1,4 @@
-const CountryList = ({ countryNames }) => {
+const CountriesList = ({ countryNames }) => {
 
     if (countryNames.length === 0 || countryNames.length === 1) {
         return null
@@ -17,4 +17,4 @@ const CountryList = ({ countryNames }) => {
     )
 }
 
-export default CountryList
+export default CountriesList
