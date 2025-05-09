@@ -6,6 +6,7 @@ const CapitalWeather = ({ countryDetails, weatherData }) => {
     const capital = countryDetails.capital[0]
     const temperature = weatherData.main.temp - 273.15 // Convert from Kelvin to Celsius
     const windSpeed = weatherData.wind.speed // Wind speed in m/s
+    // const weatherIcon = 'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon.slice(0, -1) + 'd@2x.png' // Weather icon URL
     const weatherIcon = 'https://openweathermap.org/img/wn/' + weatherData.weather[0].icon + '@2x.png' // Weather icon URL
     console.log('Weather icon URL:', weatherIcon)
 
