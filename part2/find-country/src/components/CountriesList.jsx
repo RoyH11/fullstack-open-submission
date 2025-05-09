@@ -1,4 +1,4 @@
-const CountriesList = ({ countryNames }) => {
+const CountriesList = ({ countryNames, handleShowCountry }) => {
 
     if (countryNames.length === 0 || countryNames.length === 1) {
         return null
@@ -11,7 +11,9 @@ const CountriesList = ({ countryNames }) => {
     return (
         <div>
             {countryNames.map((countryName, index) => (
-                <div key={index}>{countryName}</div>
+                <div key={index}>
+                    {countryName} <button onClick={() => handleShowCountry(countryName)}>Show</button>
+                </div>
             ))}
         </div>
     )

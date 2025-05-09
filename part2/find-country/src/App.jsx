@@ -10,7 +10,7 @@ const App = () => {
   const [countries, setCountries] = useState([])
   const [singleCountryDetails, setSingleCountryDetails] = useState(null)
 
-  // fetch all countries on initial render, only the country names
+  // Iitial effect to fetch all country names
   useEffect(() => {
     axios
       .get('https://studies.cs.helsinki.fi/restcountries/api/all')
@@ -21,6 +21,9 @@ const App = () => {
       })
   }, [])
 
+
+
+  // Effect for input changes
   useEffect(() => {
     // wait for allCountryNames 
     if (allCountryNames.length === 0) {
@@ -42,27 +45,36 @@ const App = () => {
     )
     console.log('Filtered countries:', filteredCountries)
 
-    if (filteredCountries.length === 1) {
+    if (filteredCountries.length === 1) { 
+      // Found 1 country
       const countryName = filteredCountries[0]
       console.log('Single country found:', countryName)
-      // Fetch single country details
-      axios
-        .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${countryName}`)
-        .then(response => {
-          setSingleCountryDetails(response.data)
-          console.log('Single country details fetched:', response.data)
-        })
-        .catch(error => {
-          console.error('Error fetching single country details:', error)
-        })
+      
+      fetchCountryDetails(countryName)
       setCountries([countryName])
     } else {
+      // More than one country found
       setSingleCountryDetails(null)
       setCountries(filteredCountries)
     }
     
   },[allCountryNames, newCountry])
 
+
+  const fetchCountryDetails = (countryName) => {
+    // Fetch single country details
+    axios
+      .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${countryName}`)
+      .then(response => {
+        setSingleCountryDetails(response.data)
+        console.log('Single country details fetched:', response.data)
+      })
+      .catch(error => {
+        console.error('Error fetching single country details:', error)
+      })
+  }
+
+  // Handle input change
   const handleNewCountryChange = (event) => {
     setNewCountry(event.target.value)
   }
@@ -70,7 +82,7 @@ const App = () => {
   return (
     <div>
       <FindCountry newCountry={newCountry} handleNewCountryChange={handleNewCountryChange} />
-      <CountriesList countryNames={countries} />
+      <CountriesList countryNames={countries} handleShowCountry={handleShowCountry} />
       <CountryDetails countryDetails={singleCountryDetails} />
     </div>
   )
