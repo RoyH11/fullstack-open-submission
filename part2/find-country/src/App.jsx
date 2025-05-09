@@ -79,6 +79,12 @@ const App = () => {
     setNewCountry(event.target.value)
   }
 
+  const handleShowCountry = (countryName) => {
+    // Do Not update the input field
+    fetchCountryDetails(countryName)
+    console.log('Show country button clicked:', countryName)
+  }
+
   return (
     <div>
       <FindCountry newCountry={newCountry} handleNewCountryChange={handleNewCountryChange} />
