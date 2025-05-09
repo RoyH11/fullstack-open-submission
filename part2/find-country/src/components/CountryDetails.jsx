@@ -16,8 +16,8 @@ const CountryDetails = ({ countryDetails }) => {
     return (
         <div>
             <h2>{name}</h2>
-            <p>Capital: {capital}</p>
-            <p>Area: {area} km<sup>2</sup></p>
+            <div>Capital: {capital}</div>
+            <div>Area: {area} km<sup>2</sup></div>
             <h3>Languages:</h3>
             <ul>{languagesList}</ul>
             <img src={flag} alt={`Flag of ${name}`} width="200" />

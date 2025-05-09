@@ -1,14 +1,19 @@
 import { useState, useEffect } from 'react'
+
 import FindCountry from './components/FindCountry'
 import CountriesList from './components/CountriesList'
 import CountryDetails from './components/CountryDetails'
+import CapitalWeather from './components/CapitalWeather'
+
 import countryServices from './services/countryServices'
+import weatherServices from './services/weatherServices'
 
 const App = () => {
   const [newCountry, setNewCountry] = useState('')
   const [allCountryNames, setAllCountryNames] = useState([])
   const [countries, setCountries] = useState([])
   const [singleCountryDetails, setSingleCountryDetails] = useState(null)
+  const [singleCountryWeather, setSingleCountryWeather] = useState(null)
 
   // Iitial effect to fetch all country names
   useEffect(() => {
@@ -36,6 +41,7 @@ const App = () => {
     // Nothing to filter
     if (newCountry.trim() === '') {
       setCountries([])
+      setSingleCountryDetails(null)
       return
     } 
     
@@ -59,6 +65,34 @@ const App = () => {
     }
     
   },[allCountryNames, newCountry])
+
+  // Effect for fetching weather data
+  useEffect(() => {
+    if (!singleCountryDetails) {
+      console.log('No single country details available yet.')
+      setSingleCountryWeather(null)
+      return
+    }
+
+    const [latitude, longitude] = singleCountryDetails?.capitalInfo?.latlng || []
+
+    if (!latitude || !longitude) {
+      console.log('No latitude or longitude available for weather data.')
+      setSingleCountryWeather(null)
+      return
+    }
+    console.log('Fetching weather data for:', singleCountryDetails.name.common)
+
+    weatherServices
+      .getCapitalWeather(latitude, longitude)
+      .then(weatherData => {
+        setSingleCountryWeather(weatherData)
+        console.log('Weather data fetched:', weatherData)
+      })
+      .catch(error => {
+        console.error('Error fetching weather data:', error)
+      })
+  }, [singleCountryDetails])
 
 
   const fetchCountryDetails = (countryName) => {
@@ -90,6 +124,7 @@ const App = () => {
       <FindCountry newCountry={newCountry} handleNewCountryChange={handleNewCountryChange} />
       <CountriesList countryNames={countries} handleShowCountry={handleShowCountry} />
       <CountryDetails countryDetails={singleCountryDetails} />
+      <CapitalWeather countryDetails={singleCountryDetails} weatherData={singleCountryWeather} />
     </div>
   )
 }
