@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import FindCountry from './components/FindCountry'
 import CountriesList from './components/CountriesList'
 import CountryDetails from './components/CountryDetails'
+import countryServices from './services/countryServices'
 
 const App = () => {
   const [newCountry, setNewCountry] = useState('')
@@ -12,10 +12,10 @@ const App = () => {
 
   // Iitial effect to fetch all country names
   useEffect(() => {
-    axios
-      .get('https://studies.cs.helsinki.fi/restcountries/api/all')
-      .then(response => {
-        const countryNames = response.data.map(country => country.name.common)
+    countryServices
+      .getAllCountries()
+      .then(allCountriesData => {
+        const countryNames = allCountriesData.map(countryData => countryData.name.common)
         setAllCountryNames(countryNames)
         console.log('Initial all country names fetched:', countryNames)
       })
@@ -63,11 +63,11 @@ const App = () => {
 
   const fetchCountryDetails = (countryName) => {
     // Fetch single country details
-    axios
-      .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${countryName}`)
-      .then(response => {
-        setSingleCountryDetails(response.data)
-        console.log('Single country details fetched:', response.data)
+    countryServices
+      .getCountryDetails(countryName)
+      .then(countryData => {
+        setSingleCountryDetails(countryData)
+        console.log('Single country details fetched:', countryData)
       })
       .catch(error => {
         console.error('Error fetching single country details:', error)
