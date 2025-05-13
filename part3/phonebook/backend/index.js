@@ -12,9 +12,12 @@ morgan.token('body', (req) => {
 const format = ':method :url :status :res[content-length] - :response-time ms :body'
 app.use(morgan(format))
 
-// import cors for Cross-Origin Resource Sharing
-const cors = require('cors')
-app.use(cors())
+// // import cors for Cross-Origin Resource Sharing
+// const cors = require('cors')
+// app.use(cors())
+
+// include frontend build files
+app.use(express.static('dist'))
 
 let persons = [
     { 
@@ -39,10 +42,10 @@ let persons = [
     }
 ]
 
-// basic route to check if the server is running
-app.get('/', (request, response) => {
-    response.send('<h1>Phonebook</h1>')
-}) 
+// // basic route to check if the server is running
+// app.get('/', (request, response) => {
+//     response.send('<h1>Phonebook</h1>')
+// }) 
 
 // Get all persons
 app.get('/api/persons', (request, response) => {
