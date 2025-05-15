@@ -14,6 +14,7 @@
     "deploy:full": "npm run build:ui && cd ../backend && git add . && git commit -m uibuild && git push"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^8.14.3"
   }
 }
