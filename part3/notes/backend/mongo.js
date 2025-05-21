@@ -7,6 +7,10 @@ if (process.argv.length < 3) {
 
 const password = process.argv[2]
 
+// // testing
+// const name = process.argv[3]
+// const number = process.argv[4]
+
 const url = `mongodb+srv://royh11:${password}@cluster0.q2t72wy.mongodb.net/noteApp?
 retryWrites=true&w=majority&appName=Cluster0`
 
