@@ -1,42 +1,11 @@
-// MongoDB connection setup 
-const mongoose = require('mongoose')
-
-// if (process.argv.length < 3) { 
-//     console.log('give password as argument')
-//     process.exit(1)
-// }
-
-const password = process.argv[2]
-
-const url = `mongodb+srv://royh11:${password}@cluster0.q2t72wy.mongodb.net/noteApp?
-retryWrites=true&w=majority&appName=Cluster0`
-
-mongoose.set('strictQuery', false)
-
-mongoose.connect(url)
-
-const noteSchema = new mongoose.Schema({
-    content: String, 
-    important: Boolean,
-})
-
-noteSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString()
-        delete returnedObject._id
-        delete returnedObject.__v
-    }
-})
-
-const Note = mongoose.model('Note', noteSchema)
-
-
-// import express
+// get notes from MongoDB
+require('dotenv').config()
 const express = require('express')
-const app = express()
+const Note = require('./models/note')
 
-// const cors = require('cors')
-// app.use(cors())
+
+// create express app
+const app = express()
 
 const requestLogger = (request, response, next) => {
     console.log('Method:', request.method)
@@ -129,7 +98,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
-const PORT = process.env.PORT || 3001 
+const PORT = process.env.PORT 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
