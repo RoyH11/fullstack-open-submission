@@ -1,67 +1,39 @@
-// Import express and create an Express application
+require('dotenv').config()
 const express = require('express')
+const Person = require('./models/person') // Import the Person model
+
 const app = express()
-app.use(express.json())
+
+let persons = []
 
 // Middleware morgan for logging HTTP requests
 const morgan = require('morgan')
-// Custom token for morgan to log the body of POST requests
 morgan.token('body', (req) => {
     return JSON.stringify(req.body)
 }) 
 const format = ':method :url :status :res[content-length] - :response-time ms :body'
 app.use(morgan(format))
-
-// // import cors for Cross-Origin Resource Sharing
-// const cors = require('cors')
-// app.use(cors())
-
-// include frontend build files
 app.use(express.static('dist'))
+app.use(express.json())
 
-let persons = [
-    { 
-        "id": "1",
-        "name": "Arto Hellas", 
-        "number": "040-123456"
-    },
-    { 
-        "id": "2",
-        "name": "Ada Lovelace", 
-        "number": "39-44-5323523"
-    },
-    { 
-        "id": "3",
-        "name": "Dan Abramov", 
-        "number": "12-43-234345"
-    },
-    { 
-        "id": "4",
-        "name": "Mary Poppendieck", 
-        "number": "39-23-6423122"
-    }
-]
 
-// // basic route to check if the server is running
-// app.get('/', (request, response) => {
-//     response.send('<h1>Phonebook</h1>')
-// }) 
+// basic route to check if the server is running
+app.get('/', (request, response) => {
+    response.send('<h1>Phonebook</h1>')
+}) 
 
 // Get all persons
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+    Person.find({}).then(persons => {
+        response.json(persons)
+    })
 }) 
 
 // Get a person by ID
 app.get('/api/persons/:id', (request, response) => {
-    const id = request.params.id
-    const person = persons.find(p => p.id === id) 
-
-    if (person) {
+    Person.findById(request.params.id).then(person => {
         response.json(person)
-    } else {
-        response.status(404).end()
-    }
+    })
 })
 
 // Get info about the phonebook
@@ -112,7 +84,7 @@ const unknownEndpoint = (request, response) => {
 }
 app.use(unknownEndpoint)
 
-const PORT = process.env.PORT || 3001 // Start the server
+const PORT = process.env.PORT 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })
