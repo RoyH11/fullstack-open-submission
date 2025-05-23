@@ -6,6 +6,8 @@ const Note = require('./models/note')
 
 // create express app
 const app = express()
+app.use(express.static('dist'))
+app.use(express.json())
 
 let notes = []
 
@@ -17,8 +19,7 @@ const requestLogger = (request, response, next) => {
     next()
 }
 app.use(requestLogger)
-app.use(express.static('dist'))
-app.use(express.json())
+
 
 // hello world
 app.get('/', (request, response) => {
