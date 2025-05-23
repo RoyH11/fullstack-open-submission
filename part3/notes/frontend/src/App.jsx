@@ -20,6 +20,7 @@ const App = () => {
       })
   }, [])
   console.log('render', notes.length, 'notes')
+  console.log('notes:', notes)
 
 
   // Function to toggle the importance of a note
