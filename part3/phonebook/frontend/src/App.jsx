@@ -51,7 +51,6 @@ const App = () => {
     const personObject = {
       name: trimmedName,
       number: trimmedNumber,
-      id: String(persons.length + 1) // Simple ID generation
     }
 
     // Check if the name already exists in the phonebook
@@ -149,7 +148,7 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h2>Phonebook Frontend</h2>
       <Notification message={notification.message} type={notification.type} />
       <Filter filter={filter} handleFilterChange={handleFilterChange} />
       <h2>add a new</h2>
