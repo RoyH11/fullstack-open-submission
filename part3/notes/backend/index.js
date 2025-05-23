@@ -70,27 +70,29 @@ app.post('/api/notes', (request, response) => {
 app.put('/api/notes/:id', (request, response, next) => {
     const { content, important } = request.body
 
-    Note.findByIdAndUpdate(
-        request.params.id,
-        { content, important },
-        { new: true, runValidators: true, context: 'query' }
-    )
-        .then(updatedNote => {
-            if (updatedNote) {
-                response.json(updatedNote)
-            } else {
-                response.status(404).end()
+    Note.findByIdAndUpdate(request.params.id)
+        .then(note => {
+            if (!note) {
+                return response.status(404).end()
             }
+
+            note.content = content
+            note.important = important
+
+            return note.save().then((updatedNote) => {
+                response.json(updatedNote)
+            })
         })
         .catch(error => next(error))
 })
 
-// delete a note, UNFINISHED
-app.delete('/api/notes/:id', (request, response) => {
-    const id = request.params.id
-    notes = notes.filter(note => note.id !== id)
-
-    response.status(204).end()
+// delete a note
+app.delete('/api/notes/:id', (request, response, next) => {
+    Note.findByIdAndDelete(request.params.id)
+        .then(result => {
+            response.status(204).end()
+        })
+        .catch(error => next(error))
 })
 
 // unknown endpoint
