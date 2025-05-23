@@ -66,6 +66,25 @@ app.post('/api/notes', (request, response) => {
     })
 })
 
+// update a note
+app.put('/api/notes/:id', (request, response, next) => {
+    const { content, important } = request.body
+
+    Note.findByIdAndUpdate(
+        request.params.id,
+        { content, important },
+        { new: true, runValidators: true, context: 'query' }
+    )
+        .then(updatedNote => {
+            if (updatedNote) {
+                response.json(updatedNote)
+            } else {
+                response.status(404).end()
+            }
+        })
+        .catch(error => next(error))
+})
+
 // delete a note, UNFINISHED
 app.delete('/api/notes/:id', (request, response) => {
     const id = request.params.id
