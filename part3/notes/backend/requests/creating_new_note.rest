@@ -2,12 +2,7 @@ POST http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "VS code rest client is a pretty cool extension",
-    "importance": true
+    "content": "add from app to mongodb take 2",
+    "important": true
 }
 
-###
-GET http://localhost:3001/api/notes
-
-### 
-GET http://localhost:3001/api/persons
