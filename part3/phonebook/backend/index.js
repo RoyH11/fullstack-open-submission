@@ -8,6 +8,7 @@ let persons = []
 
 // Middleware morgan for logging HTTP requests
 const morgan = require('morgan')
+const { default: mongoose } = require('mongoose')
 morgan.token('body', (req) => {
     return JSON.stringify(req.body)
 }) 
@@ -52,9 +53,19 @@ app.get('/info', (request, response) => {
 // Delete a person
 app.delete('/api/persons/:id', (request, response) => {
     const id = request.params.id
-    persons = persons.filter(p => p.id !== id)
-
-    response.status(204).end()
+    if (!mongoose.isValidObjectId(id)) {
+        return response.status(400).send({ error: 'invalid id for MongoDB' })
+    }
+    Person.findByIdAndDelete(id).then(result => {
+        if (result) {
+            response.status(204).end()
+        } else {
+            response.status(404).send({ error: 'person not found' })
+        }
+    }).catch(error => {
+        console.error(error)
+        response.status(500).send({ error: 'internal server error' })
+    })
 }) 
 
 
