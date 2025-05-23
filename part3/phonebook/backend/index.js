@@ -39,9 +39,14 @@ app.get('/api/persons/:id', (request, response) => {
 // Get info about the phonebook
 app.get('/info', (request, response) => {
     const date = new Date()
-    const info = `<p>Phonebook has info for ${persons.length} people</p>`
-    const dateInfo = `<p>${date}</p>`
-    response.send(info + dateInfo)
+    Person.countDocuments({}).then(count => {
+        response.send(`
+            <div>
+                <p>Phonebook has info for ${count} people</p>
+                <p>${date}</p>
+            </div>
+        `)
+    })
 })
 
 // Delete a person
