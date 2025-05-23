@@ -51,7 +51,6 @@ const App = () => {
     const personObject = {
       name: trimmedName,
       number: trimmedNumber,
-      id: String(persons.length + 1) // Simple ID generation
     }
 
     // Check if the name already exists in the phonebook

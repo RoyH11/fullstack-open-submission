@@ -8,8 +8,14 @@ const getAll = () => {
         number: '000-000-0000',
         id: "999999"
     }
+
+    const nonExistingPersonValidId = {
+        name: 'Non-existing Person Valid ID',
+        number: '111-111-1111',
+        id: "999999999999999999999999"
+    }
     // return request.then(response => response.data); 
-    return request.then(response => response.data.concat(nonExistingPerson)); // testing graceful deletion
+    return request.then(response => response.data.concat(nonExistingPerson, nonExistingPersonValidId)); // testing graceful deletion
 }
 
 const create = (newPerson) => {
