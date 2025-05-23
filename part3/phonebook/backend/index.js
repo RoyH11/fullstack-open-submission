@@ -57,10 +57,7 @@ app.delete('/api/persons/:id', (request, response) => {
     response.status(204).end()
 }) 
 
-// ID generation function
-const generateId = () => {
-    return Math.floor(Math.random() * 10000).toString()
-}
+
 // Add a new person
 app.post('/api/persons', (request, response) => {
     const body = request.body
@@ -69,18 +66,21 @@ app.post('/api/persons', (request, response) => {
         return response.status(400).json({ error: 'name or number missing' })
     }
 
-    if (persons.some(p => p.name === body.name)) {
-        return response.status(400).json({ error: 'name must be unique' })
-    }
+    // Check if the name already exists
+    Person.findOne({ name: body.name }).then(existingPerson => {
+        if (existingPerson) {
+            return response.status(400).json({ error: 'person alrady exists in phonebook' })
+        }
 
-    const person = {
-        id: generateId(),
-        name: body.name,
-        number: body.number
-    }
+        const person = new Person({
+            name: body.name,
+            number: body.number,
+        })
 
-    persons = persons.concat(person)
-    response.json(person)
+        person.save().then(savedPerson => {
+            response.json(savedPerson)
+        })
+    })
 }) 
 
 // unknown endpoint handler
