@@ -31,10 +31,11 @@ app.get('/api/persons', (request, response) => {
 }) 
 
 // Get a person by ID
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id).then(person => {
         response.json(person)
     })
+    .catch(error => next(error))
 })
 
 // Get info about the phonebook
@@ -51,21 +52,14 @@ app.get('/info', (request, response) => {
 })
 
 // Delete a person
-app.delete('/api/persons/:id', (request, response) => {
-    const id = request.params.id
-    if (!mongoose.isValidObjectId(id)) {
-        return response.status(400).send({ error: 'invalid id for MongoDB' })
-    }
+app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndDelete(id).then(result => {
         if (result) {
             response.status(204).end()
         } else {
             response.status(404).send({ error: 'person not found' })
         }
-    }).catch(error => {
-        console.error(error)
-        response.status(500).send({ error: 'internal server error' })
-    })
+    }).catch(error => next(error))
 }) 
 
 
@@ -99,6 +93,18 @@ const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
 }
 app.use(unknownEndpoint)
+
+// error handler
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError') {
+        return response.status(400).send({ error: 'malformatted id' })
+    }
+
+    next(error)
+}
+app.use(errorHandler)
 
 const PORT = process.env.PORT 
 app.listen(PORT, () => {
