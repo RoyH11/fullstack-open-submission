@@ -6,3 +6,12 @@ Content-Type: application/json
     "important": true
 }
 
+### creating an invalid note
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "lol",
+    "important": true
+}
+
