@@ -60,7 +60,7 @@ app.post('/api/notes', (request, response, next) => {
     content: body.content,
     important: body.important || false,
   })
-    
+
   note.save()
     .then(savedNote => {
       response.json(savedNote)
@@ -117,7 +117,7 @@ const errorHandler = (error, request, response, next) => {
 }
 app.use(errorHandler)
 
-const PORT = process.env.PORT 
+const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
