@@ -1,0 +1,25 @@
+PUT http://localhost:3001/api/notes/68262d925eff0db64d10cd09
+Content-Type: application/json
+
+{
+    "content": "HTML is easy",
+    "important": false
+}
+
+### a note that does not exist
+PUT http://localhost:3001/api/notes/000000000000000000000000
+Content-Type: application/json
+
+{
+    "content": "HTML is easy",
+    "important": false
+}
+
+### a bad id
+PUT http://localhost:3001/api/notes/123
+Content-Type: application/json
+
+{
+    "content": "HTML is easy",
+    "important": false
+}

@@ -1,0 +1,7 @@
+DELETe http://localhost:3001/api/notes/6830fccebbfd2d8f4dde8fc5
+
+### a note that does not exist
+DELETe http://localhost:3001/api/notes/000000000000000000000000
+
+### a bad id
+DELETe http://localhost:3001/api/notes/123

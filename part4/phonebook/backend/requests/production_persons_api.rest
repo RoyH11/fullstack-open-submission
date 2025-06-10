@@ -1,0 +1,39 @@
+### REST API for Persons
+GET https://phonebook-part3-i6ix.onrender.com/api/persons
+
+### Get info about the server
+GET https://phonebook-part3-i6ix.onrender.com/info
+
+### Get 1 person
+GET https://phonebook-part3-i6ix.onrender.com/api/persons/1
+
+### Get 1 person with a non-existing id
+GET https://phonebook-part3-i6ix.onrender.com/api/persons/100
+
+### Delete a person
+DELETE https://phonebook-part3-i6ix.onrender.com/api/persons/1
+
+### Create a new person
+POST https://phonebook-part3-i6ix.onrender.com/api/persons
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "number": "1234567890"
+}
+
+### Invalid creation, missing number
+POST https://phonebook-part3-i6ix.onrender.com/api/persons
+Content-Type: application/json
+
+{
+  "name": "Jane Doe"
+}
+
+### Invalid creation, missing name
+POST https://phonebook-part3-i6ix.onrender.com/api/persons
+Content-Type: application/json
+
+{
+  "number": "1234567890"
+}

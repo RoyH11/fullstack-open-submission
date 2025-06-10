@@ -1,0 +1,17 @@
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "add from app to mongodb take 2",
+    "important": true
+}
+
+### creating an invalid note
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "lol",
+    "important": true
+}
+

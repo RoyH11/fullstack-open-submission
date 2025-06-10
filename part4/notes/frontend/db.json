@@ -1,0 +1,79 @@
+{
+  "notes": [
+    {
+      "id": "1",
+      "content": "HTML is easy",
+      "important": true
+    },
+    {
+      "id": "2",
+      "content": "Browser can execute only JavaScript",
+      "important": false
+    },
+    {
+      "id": "3",
+      "content": "GET and POST are the most important methods of HTTP protocol",
+      "important": false
+    },
+    {
+      "id": "4",
+      "content": "test note ",
+      "important": false
+    },
+    {
+      "id": "5",
+      "content": "test note take 2",
+      "important": true
+    },
+    {
+      "id": "6",
+      "content": "without service add ",
+      "important": true
+    },
+    {
+      "id": "7",
+      "content": "without service add take 2 ",
+      "important": true
+    },
+    {
+      "id": "8",
+      "content": "without service add take 3 ",
+      "important": true
+    },
+    {
+      "id": "9",
+      "content": "id test? ",
+      "important": false
+    },
+    {
+      "id": "10",
+      "content": "id test 2 ",
+      "important": false
+    },
+    {
+      "id": "11",
+      "content": "id manual handle ",
+      "important": false
+    },
+    {
+      "id": "12",
+      "content": "add test with service ",
+      "important": false
+    },
+    {
+      "id": "13",
+      "content": "add test again",
+      "important": false
+    },
+    {
+      "id": "14",
+      "content": "add test after refactoring ",
+      "important": false
+    },
+    {
+      "id": "16",
+      "content": "test refactor ",
+      "important": false
+    }
+  ]
+}

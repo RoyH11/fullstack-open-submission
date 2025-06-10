@@ -1,0 +1,5 @@
+### Get 1 person
+GET http://localhost:3001/api/persons/682df55ceb4846299cd8bb11
+
+### Get 1 person with a non-existing id
+GET http://localhost:3001/api/persons/100

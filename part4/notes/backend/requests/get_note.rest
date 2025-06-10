@@ -1,0 +1,7 @@
+GET http://localhost:3001/api/notes/68262d925eff0db64d10cd09
+
+### a note that does not exist
+GET http://localhost:3001/api/notes/000000000000000000000000
+
+### a bad id
+GET http://localhost:3001/api/notes/123

@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend for phonebook ",
+  "license": "MIT",
+  "author": "RoyH11",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf dist && cd ../frontend && npm run build && cp -r dist ../backend",
+    "deploy:full": "npm run build:ui && cd ../backend && git add . && git commit -m uibuild && git push"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "mongoose": "^8.15.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.28.0",
+    "@stylistic/eslint-plugin": "^4.4.1",
+    "eslint": "^9.28.0",
+    "globals": "^16.2.0"
+  }
+}
