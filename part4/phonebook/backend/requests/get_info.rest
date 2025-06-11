@@ -1,2 +1,0 @@
-### Get info about the server
-GET http://localhost:3001/info
