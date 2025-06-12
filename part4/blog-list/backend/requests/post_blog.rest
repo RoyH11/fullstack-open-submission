@@ -1,0 +1,10 @@
+# post a new blog
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Roy's GitHub Profile",
+  "author": "Roy Huang", 
+  "url": "https://github.com/RoyH11", 
+  "likes": 42
+}

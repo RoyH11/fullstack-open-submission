@@ -1,0 +1,2 @@
+# get all the notes 
+GET http://localhost:3001/api/blogs
