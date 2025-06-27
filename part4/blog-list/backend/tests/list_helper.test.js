@@ -1,12 +1,12 @@
 const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
-const { 
+const {
   blogs,
   listWithOneBlog,
   tiedLikesBlogs,
   tiedLikesBlogsReverseOrder,
-  tiedLikesBlogsWithSameAuthor 
+  tiedLikesBlogsWithSameAuthor
 } = require('./test_blogs')
 
 // testing the dummy function
@@ -138,7 +138,7 @@ describe('most blogs', () => {
 
 // testing the mostLikes function
 describe('most likes', () => {
-  
+
   test('when list is empty, returns null', () => {
     const result = listHelper.mostLikes([])
     assert.strictEqual(result, null)
@@ -165,7 +165,7 @@ describe('most likes', () => {
   test('when multiple authors have the same number of likes, returns the first one found', () => {
     const result = listHelper.mostLikes(tiedLikesBlogs)
     const expected = {
-      author: 'Robert C. Martin', 
+      author: 'Robert C. Martin',
       likes: 10
     }
     assert.deepStrictEqual(result, expected)
