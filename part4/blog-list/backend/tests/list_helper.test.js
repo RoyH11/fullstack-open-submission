@@ -1,7 +1,13 @@
 const { test, describe } = require('node:test')
 const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
-const { blogs, listWithOneBlog, tiedLikesBlogs } = require('./test_blogs')
+const { 
+  blogs,
+  listWithOneBlog,
+  tiedLikesBlogs,
+  tiedLikesBlogsReverseOrder,
+  tiedLikesBlogsWithSameAuthor 
+} = require('./test_blogs')
 
 // testing the dummy function
 test('dummy returns one', () => {
@@ -62,6 +68,16 @@ describe('favorite blog', () => {
     const result = listHelper.favoriteBlog(tiedLikesBlogs)
     assert.deepStrictEqual(result, tiedLikesBlogs[0])
   })
+
+  test('when multiple blogs have the same number of likes, returns the first one found #2', () => {
+    const result = listHelper.favoriteBlog(tiedLikesBlogsReverseOrder)
+    assert.deepStrictEqual(result, tiedLikesBlogsReverseOrder[0])
+  })
+
+  test('when multiple blogs have the same number of likes, returns the first one found #3', () => {
+    const result = listHelper.favoriteBlog(tiedLikesBlogsWithSameAuthor)
+    assert.deepStrictEqual(result, tiedLikesBlogsWithSameAuthor[0])
+  })
 })
 
 
@@ -96,6 +112,79 @@ describe('most blogs', () => {
     const expected = {
       author: 'Robert C. Martin',
       blogs: 1
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when multiple authors have the same number of blogs, returns the first one found #2', () => {
+    const result = listHelper.mostBlogs(tiedLikesBlogsReverseOrder)
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      blogs: 1
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when multiple authors have the same number of blogs, returns the first one found #3', () => {
+    const result = listHelper.mostBlogs(tiedLikesBlogsWithSameAuthor)
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      blogs: 2
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+})
+
+
+// testing the mostLikes function
+describe('most likes', () => {
+  
+  test('when list is empty, returns null', () => {
+    const result = listHelper.mostLikes([])
+    assert.strictEqual(result, null)
+  })
+
+  test('when list has only one blog, returns that author with likes of that blog', () => {
+    const result = listHelper.mostLikes(listWithOneBlog)
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      likes: 5
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when list has multiple blogs, returns the author with most likes', () => {
+    const result = listHelper.mostLikes(blogs)
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      likes: 17
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when multiple authors have the same number of likes, returns the first one found', () => {
+    const result = listHelper.mostLikes(tiedLikesBlogs)
+    const expected = {
+      author: 'Robert C. Martin', 
+      likes: 10
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when multiple authors have the same number of likes, returns the first one found #2', () => {
+    const result = listHelper.mostLikes(tiedLikesBlogsReverseOrder)
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      likes: 10
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when multiple authors have the same number of likes, returns the first one found #3', () => {
+    const result = listHelper.mostLikes(tiedLikesBlogsWithSameAuthor)
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      likes: 40
     }
     assert.deepStrictEqual(result, expected)
   })
