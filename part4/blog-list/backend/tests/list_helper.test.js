@@ -3,6 +3,7 @@ const assert = require('node:assert')
 const listHelper = require('../utils/list_helper')
 const { blogs, listWithOneBlog, tiedLikesBlogs } = require('./test_blogs')
 
+// testing the dummy function
 test('dummy returns one', () => {
   const blogs = []
 
@@ -10,7 +11,10 @@ test('dummy returns one', () => {
   assert.strictEqual(result, 1)
 })
 
+
+// testing the totalLikes function
 describe('total likes', () => {
+
   test('when list is empty, equals zero', () => {
     const result = listHelper.totalLikes([])
     assert.strictEqual(result, 0)
@@ -27,7 +31,10 @@ describe('total likes', () => {
   })
 })
 
+
+// testing the favoriteBlog function
 describe('favorite blog', () => {
+
   test('when list is empty, returns null', () => {
     const result = listHelper.favoriteBlog([])
     assert.strictEqual(result, null)
@@ -54,5 +61,42 @@ describe('favorite blog', () => {
   test('when multiple blogs have the same number of likes, returns the first one found', () => {
     const result = listHelper.favoriteBlog(tiedLikesBlogs)
     assert.deepStrictEqual(result, tiedLikesBlogs[0])
+  })
+})
+
+
+// testing the mostBlogs function
+describe('most blogs', () => {
+
+  test ('when list is empty, returns null', () => {
+    const result = listHelper.mostBlogs([])
+    assert.strictEqual(result, null)
+  })
+
+  test('when list has only one blog, returns that author with one blog', () => {
+    const result = listHelper.mostBlogs(listWithOneBlog)
+    const expected = {
+      author: 'Edsger W. Dijkstra',
+      blogs: 1
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when list has multiple blogs, returns the author with most blogs', () => {
+    const result = listHelper.mostBlogs(blogs)
+    const expected = {
+      author: 'Robert C. Martin',
+      blogs: 3
+    }
+    assert.deepStrictEqual(result, expected)
+  })
+
+  test('when multiple authors have the same number of blogs, returns the first one found', () => {
+    const result = listHelper.mostBlogs(tiedLikesBlogs)
+    const expected = {
+      author: 'Robert C. Martin',
+      blogs: 1
+    }
+    assert.deepStrictEqual(result, expected)
   })
 })
