@@ -40,7 +40,7 @@ test.only('all notes are returned', async () => {
 })
 
 test('a specific note is within the returned notes', async () => {
-  const response = await api.get('api/notes')
+  const response = await api.get('/api/notes')
 
   const contents = response.body.map(e => e.content)
   assert(contents.includes('HTML is easy'))
