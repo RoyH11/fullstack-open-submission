@@ -87,7 +87,7 @@ const tiedLikesBlogsReverseOrder = [
     url: 'https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf',
     likes: 10,
     __v: 0
-  }, 
+  },
   {
     _id: '5a422ba71b54a676234d17fb',
     title: 'TDD harms architecture',
