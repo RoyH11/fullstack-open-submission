@@ -54,7 +54,7 @@ test('a valid blog can be added', async () => {
     .send(newBlog)
     .expect(201)
     .expect('Content-Type', /application\/json/)
-  
+
   const blogsAtEnd = await helper.blogsInDb()
   assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
 
@@ -62,6 +62,26 @@ test('a valid blog can be added', async () => {
   assert(titles.includes(newBlog.title), 'New blog title should be in the list')
 })
 
+
+test('if likes are not defined, defaults to 0', async () => {
+  const newBlog = {
+    title: 'Blog without likes',
+    author: 'Roy Huang',
+    url: 'https://example.com/blog-without-likes',
+    // Note: no likes property
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  const addedBlog = blogsAtEnd.find(blog => blog.title === newBlog.title)
+  assert(addedBlog !== undefined, 'Added blog should be in the list')
+  assert.strictEqual(addedBlog.likes, 0, 'Likes should default to 0')
+})
 
 after(async () => {
   await mongoose.connection.close()
