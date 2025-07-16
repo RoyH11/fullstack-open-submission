@@ -15,7 +15,8 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
-    "express": "^5.1.0",
+    "express": "^4.21.2",
+    "express-async-errors": "^3.1.1",
     "lodash": "^4.17.21",
     "mongoose": "^8.15.1"
   },
