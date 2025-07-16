@@ -41,6 +41,28 @@ test('blog posts have id property instead of _id', async () => {
 })
 
 
+test('a valid blog can be added', async () => {
+  const newBlog = {
+    title: 'Fullstack Open Submission',
+    author: 'Roy Huang',
+    url: 'https://github.com/RoyH11/fullstack-open-submission',
+    likes: 5,
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+  
+  const blogsAtEnd = await helper.blogsInDb()
+  assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
+
+  const titles = blogsAtEnd.map(blog => blog.title)
+  assert(titles.includes(newBlog.title), 'New blog title should be in the list')
+})
+
+
 after(async () => {
   await mongoose.connection.close()
 })
