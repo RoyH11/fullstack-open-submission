@@ -147,6 +147,26 @@ describe('When there is initially some blogs saved', () => {
       assert(!titles.includes(newBlog.title), 'Blog without title and URL should not be in the list')
     })
   })
+
+
+  describe('deleting a blog', () => {
+    test('a blog can be deleted', async () => {
+      const blogsAtStart = await helper.blogsInDb()
+      const blogToDelete = blogsAtStart[0]
+
+      await api
+        .delete(`/api/blogs/${blogToDelete.id}`)
+        .expect(204)
+
+      const blogsAtEnd = await helper.blogsInDb()
+      assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length - 1)
+
+      const titles = blogsAtEnd.map(blog => blog.title)
+      assert(!titles.includes(blogToDelete.title), 'Deleted blog should not be in the list')
+    })
+  })
+
+
 })
 
 
