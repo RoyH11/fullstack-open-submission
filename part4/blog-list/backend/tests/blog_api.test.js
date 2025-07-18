@@ -167,6 +167,25 @@ describe('When there is initially some blogs saved', () => {
   })
 
 
+  describe('updating a blog', () => {
+    test('update likes of a blog', async () => {
+      const blogsAtStart = await helper.blogsInDb()
+      const blogToUpdate = blogsAtStart[0]
+      const updatedBlog = { ...blogToUpdate, likes: blogToUpdate.likes + 1 }
+
+      await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(updatedBlog)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+      const blogsAtEnd = await helper.blogsInDb()
+      const updatedBlogFromDb = blogsAtEnd.find(blog => blog.id === blogToUpdate.id)
+      assert.strictEqual(updatedBlogFromDb.likes, blogToUpdate.likes + 1, 'Likes should be updated')
+    })
+  })
+
+
 })
 
 
