@@ -15,3 +15,32 @@ Content-Type: application/json
     "important": true
 }
 
+### creating a note with a userId
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "note with userId",
+    "important": true,
+    "userId": "687bd3afc0291538f4663516"
+}
+
+### creating a note called "Roy note" with a userId
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "Roy note",
+    "important": true,
+    "userId": "687bd3afc0291538f4663516"
+}
+
+### creating another note with a userId
+POST http://localhost:3001/api/notes
+Content-Type: application/json
+
+{
+    "content": "newuser note",
+    "important": false,
+    "userId": "687bd3aec0291538f4663514"
+}
